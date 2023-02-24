@@ -1,10 +1,14 @@
 let socket = io("http://localhost:5050", { path: '/real-time' })
 let canvas;
 let controllerX, controllerY = 0;
-let qrCodeX, qrCodeY = 0;
-let mazeImg, snackImg;
+let qrCodeX, qrCodeY, finishLineX, finishLineY = 0;
+//Images
+let mazeImg, snackImg, snacksBox;
 //Interfaces
 let initial, instructions, game, form, thanks;
+
+
+
 
 
 function preload() {
@@ -15,6 +19,7 @@ function preload() {
     game = loadImage('/app/assets/Game.jpg')
     form = loadImage('/app/assets/Winner.jpg')
     thanks = loadImage('/app/assets/thanks.jpg')
+    snacksBox = loadImage('/app/assets/snacks-box.png');
 }
 
 
@@ -29,6 +34,10 @@ function setup() {
     controllerY = 50;
     qrCodeX = windowWidth/2 + 5;
     qrCodeY = windowHeight/2 + 80;
+    finishLineX = controllerX - 200;
+    finishLineY = controllerY + 600;
+
+
     imageMode(CENTER);
     rectMode(CENTER);
 }
@@ -49,8 +58,10 @@ function draw() {
         case 2:
             background(0,95);
             newCursor(pmouseX, pmouseY);
+            image(snacksBox, finishLineX, finishLineY, 70, 70)
             image(snackImg, controllerX, controllerY, 150, 150)
             image(mazeImg, windowWidth/2, windowHeight/2);
+            
             break;
 
         case 3:
@@ -72,6 +83,8 @@ function draw() {
     changeScreen();
 }
 
+
+
 function changeScreen(){
     if (screen === 0 && dist(pmouseX, pmouseY, qrCodeX, qrCodeY) < 75) {
         screen = 1;
@@ -83,14 +96,12 @@ function changeScreen(){
         }
     }
 
-    if (screen === 2) {
-        if(pmouseY > 500){
+    if (screen === 2 && dist(pmouseX, pmouseY, finishLineX, finishLineY) < 25) {
             screen = 3;
-        }
     }
 
     if (screen === 3) {
-        if (pmouseX > 600) {
+        if (keyCode === ENTER) {
             screen = 4;
         }
     }
