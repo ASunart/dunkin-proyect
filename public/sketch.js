@@ -6,9 +6,8 @@ let qrCodeX, qrCodeY, finishLineX, finishLineY = 0;
 let mazeImg, snackImg, snacksBox;
 //Interfaces
 let initial, instructions, game, form, thanks;
-
-
-
+//Maze
+let mazeArray;
 
 
 function preload() {
@@ -40,6 +39,26 @@ function setup() {
 
     imageMode(CENTER);
     rectMode(CENTER);
+
+    mazeArray = [
+        [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0],
+        [0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0],
+        [0,1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0],
+        [0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0],
+        [0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,0],
+        [0,1,0,1,0,0,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0],
+        [0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0],
+        [0,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,0],
+        [0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
+        [0,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,0],
+        [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0],
+        [0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    ]
 }
 
 function draw() {
@@ -56,12 +75,25 @@ function draw() {
             break;    
 
         case 2:
-            background(0,95);
+            background(0.95)
             newCursor(pmouseX, pmouseY);
             image(snacksBox, finishLineX, finishLineY, 70, 70)
             image(snackImg, controllerX, controllerY, 150, 150)
             image(mazeImg, windowWidth/2, windowHeight/2);
-            
+//             let mazeWidth = 25;
+//             let mazeHeight = 25;
+
+//             for (let y = 0; y < 17; y++) {
+//             for (let x = 0; x < 17; x++) {
+//             if (mazeArray[y][x] == 1) {
+//                 noFill();
+//             } else {
+//                 fill(255, 165, 0);
+//             }
+//             rectMode(CORNER);
+//             rect(x * mazeWidth, y * mazeHeight, mazeWidth, mazeHeight);
+//     }
+//   }    
             break;
 
         case 3:
@@ -95,11 +127,9 @@ function changeScreen(){
             screen = 2;
         }
     }
-
     if (screen === 2 && dist(pmouseX, pmouseY, finishLineX, finishLineY) < 25) {
             screen = 3;
     }
-
     if (screen === 3) {
         if (keyCode === ENTER) {
             screen = 4;
