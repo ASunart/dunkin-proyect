@@ -11,19 +11,23 @@ let mazeImg, snackImg, snacksBox;
 //Interfaces
 let initial, instructions, game, form, thanks;
 
+let changes;
+
 
 
 function preload() {
-    mazeImg = loadImage('/app/assets/maze.png');
-    snackImg = loadImage('/app/assets/minisnack.png');
-    initial = loadImage('/app/assets/Initial.jpg');
-    instructions = loadImage('/app/assets/Instructions.jpg')
-    game = loadImage('/app/assets/Game.jpg')
+    // mazeImg = loadImage('./assets/maze.png');
+    // snackImg = loadImage('./assets/minisnack.png');
+    initial = loadImage('/app/assets/Initial.png');
+    instructions = loadImage('./assets/Instructions.png')
+    game = loadImage('./assets/Game.jpg')
+    form = loadImage('./assets/Winner.png')
 }
 
 
 function setup() {
     frameRate(60);
+    background(255);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
     canvas.style('position', 'fixed');
@@ -41,10 +45,21 @@ function setup() {
     rectMode(CENTER);
 }
 
+
+
 function draw() {
-    background(255)
-    newCursor(controllerX, controllerY)
-    image(game, windowWidth/2, windowHeight/2)
+    if (changes === undefined) {
+        image(initial, windowWidth/2, windowHeight/2)
+    } 
+    if (changes === 'instructions') {
+        image(instructions, windowWidth/2, windowHeight/2)
+    } 
+    // if (changes === 'game') {
+    //     image(game, windowWidth/2, windowHeight/2)
+    // }
+    if (changes === 'form') {
+        image(form, windowWidth/2, windowHeight/2)
+    }
 }
 
 
@@ -52,16 +67,17 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-function newCursor(x, y) {
-    noStroke();
-    fill(225, 19, 131);
-    ellipse(x, y, 10, 10);
-}
-
 //Add an .on() event on the socket
 
 socket.on('display-positions', msn => {
+    console.log(msn);
     let {controlX, controlY} = msn;
     controllerX = controlX
     controllerY = controlY
 })
+console.log(changes)
+
+socket.on('mupi-screens', screens =>{
+    changes = screens.src;
+    console.log(changes);
+});
