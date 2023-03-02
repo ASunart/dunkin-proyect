@@ -6,12 +6,16 @@ let socket = io(NGROK, { path: '/real-time' });
 let canvas;
 let controllerX, controllerY = 0;
 //Images
-let mazeImg, snackImg, snacksBox;
+let gameScreen;
+
+let isTouched = false;
 
 // 
 const initial = document.querySelector('.instructions');
 const instructions = document.querySelector('.start-game');
 const form = document.querySelector('.send')
+const formInfo = document.querySelector('.form');
+
 
 console.log(instructions);
 
@@ -20,20 +24,30 @@ if (initial) {
         socket.emit('screens', {src: 'instructions'})
     });
 }
-
-
 if (instructions) {
     instructions?.addEventListener('click', ()=>{
-        socket.emit('screens', {src: 'form'})
+        socket.emit('screens', {src: 'game'})
+        DeviceOrientationEvent.requestPermission();
     })
+// if () {
+    
+// }
 }
+
+// if (form) {
+//     instructions?.addEventListener('click', ()=>{
+//     socket.emit('screens', {src: 'instructions'})
+//     })
+// }
 
 
 // form.addEventListener('click', ()=>{
 //     socket.emit('screens', {src: 'thanks'})
 // });
 
-
+function preload() {
+    gameScreen = loadImage('./assets/controller.png');
+}
 
 function setup() {
     frameRate(60);
@@ -48,17 +62,40 @@ function setup() {
     imageMode(CENTER);
     rectMode(CENTER);
 
+    const userAgent = window.navigator.userAgent;
+    let deviceType;
+
+    if (/iPhone|iPad|iPod/.test(userAgent)) {
+        deviceType = 'iOS';
+    } else if (/Android/.test(userAgent)) {
+        deviceType = 'Android';
+    } else {
+        deviceType = 'Other';
+    }
+    socket.emit('device-size', { deviceType, windowWidth, windowHeight });
+    imageMode(CENTER);
 }
 
 function draw() {
-    background(255)
+    background(255, 5)
+    image(gameScreen, windowWidth/2, windowHeight/2, 300, 300);
+    newCursor(controllerX, controllerY);
     }
 
 
 
-function mouseDragged() {
-    let msn = {controlX : pmouseX, controlY: pmouseY}
-    socket.emit('positions', msn);
+function touchMoved() {
+    let msn = {pmouseX, pmouseY}
+    socket.emit('mobile-positions', msn);
+    background(255, 0 , 0);
+}
+
+function touchStarted() {
+    isTouched = true;
+}
+
+function touchEnded() {
+    isTouched = false;
 }
 
 function windowResized() {
@@ -67,7 +104,7 @@ function windowResized() {
 
 function newCursor(x, y) {
     noStroke();
-    fill(225, 19, 131);
+    fill(225, 0, 0);
     ellipse(x, y, 10, 10);
 }
 
