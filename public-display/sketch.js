@@ -1,4 +1,8 @@
-let socket = io("http://localhost:5050", { path: '/real-time' })
+const NGROK = `${window.location.hostname}`;
+console.log('Server IP: ', NGROK);
+let socket = io(NGROK, { path: '/real-time' });
+
+//let socket = io("http://localhost:5050", { path: '/real-time' })
 let canvas;
 let controllerX, controllerY = 0;
 let qrCodeX, qrCodeY, finishLineX, finishLineY = 0;

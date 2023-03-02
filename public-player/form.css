@@ -1,0 +1,70 @@
+*{
+    font-family: Helvetica;
+}
+
+body{
+    background-image: linear-gradient(
+        to bottom,
+        #ec46a19b,
+        #ec46a19b
+    ), url("./assets/DunkinPattern.jpg");
+    background-size: contain;
+}
+
+.signupFrm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    background-color: white;
+    width: 400px;
+    border-radius: 10px;
+    padding: 20px 40px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.title {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #FE6D01;
+}
+
+.inputContainer {
+    position: relative;
+    height: 45px;
+    width: 90%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.input{
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: rgb(193, 193, 193);
+    outline: none;
+}
+
+button{
+    padding: 10px 80px 10px 80px;
+    background-color: #FE6D01;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.button-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+button:hover{
+    cursor: pointer;
+}

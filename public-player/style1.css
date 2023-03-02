@@ -1,0 +1,59 @@
+*{
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+}
+
+body{
+    background-image: linear-gradient(
+        to bottom,
+        #e11384f0,
+        #e11384f0
+    ), url("./assets/DunkinPattern.jpg");
+    background-size: cover;
+    margin: 0;
+}
+
+.general{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+.banner img{
+    width: 330px;
+}
+
+p{
+    font-size: 13pt;
+    color: white;
+}
+
+.segundo-texto{
+    width: 250px;
+}
+
+.primer-texto p{
+    margin: 10px;
+    font-weight: 600;
+}
+
+a{
+    padding: 15px 80px 15px 80px;
+    font-size: 13pt;
+    border-radius: 15px;
+    border: none;
+    background-color: white;
+    color: #683817;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+.primer-texto img{
+    width: 270px;
+}
