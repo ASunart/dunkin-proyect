@@ -5,6 +5,7 @@ let socket = io(NGROK, { path: '/real-time' });
 //let socket = io("http://localhost:5050", { path: '/real-time' })
 let canvas;
 let controllerX, controllerY = 0;
+let finishX, finishY;
 //Images
 let gameScreen;
 
@@ -13,8 +14,7 @@ let isTouched = false;
 // 
 const initial = document.querySelector('.instructions');
 const instructions = document.querySelector('.start-game');
-const form = document.querySelector('.send')
-const formInfo = document.querySelector('.form');
+const form = document.querySelector('.sent')
 
 
 console.log(instructions);
@@ -29,16 +29,13 @@ if (instructions) {
         socket.emit('screens', {src: 'game'})
         DeviceOrientationEvent.requestPermission();
     })
-// if () {
-    
-// }
 }
 
-// if (form) {
-//     instructions?.addEventListener('click', ()=>{
-//     socket.emit('screens', {src: 'instructions'})
-//     })
-// }
+if (form) {
+    form?.addEventListener('click', ()=>{
+    socket.emit('screens', {src: 'thanks'})
+    })
+}
 
 
 // form.addEventListener('click', ()=>{
@@ -58,6 +55,8 @@ function setup() {
     canvas.style('right', '0');
     controllerX = windowWidth / 2;
     controllerY = 50;
+    finishX = windowWidth / 2 + 100;
+    finishY = windowHeight/2 + 140;
 
     imageMode(CENTER);
     rectMode(CENTER);
@@ -77,17 +76,28 @@ function setup() {
 }
 
 function draw() {
+    noFill()
+    noStroke()
+    rect(finishX, finishY, 25, 25)
     background(255, 5)
-    image(gameScreen, windowWidth/2, windowHeight/2, 300, 300);
-    newCursor(controllerX, controllerY);
+    fill(225, 19, 131)
+    ellipse(90, 200, 50, 50)
+    image(gameScreen, windowWidth/2, windowHeight/2, 200, 200);
+    textSize(24)
+    text('Start from the pink dot', windowWidth/2-110, windowHeight/2 +200)
+    redirect();
     }
 
-
+    function redirect() {
+        if (dist(pmouseX, pmouseY, finishX, finishY)<15) {
+            window.location.href = 'form.html';
+        }
+    }
 
 function touchMoved() {
     let msn = {pmouseX, pmouseY}
     socket.emit('mobile-positions', msn);
-    background(255, 0 , 0);
+    background(225, 19, 131);
 }
 
 function touchStarted() {

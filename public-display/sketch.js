@@ -5,7 +5,11 @@ let socket = io(NGROK, { path: '/real-time' });
 
 //let socket = io("http://localhost:5050", { path: '/real-time' })
 let canvas;
-let controllerX, controllerY;
+let controllerX, controllerY, initialX, initialY;
+let finishX, finishY;
+let initialTime = 60;
+let timeLeft = initialTime;
+let timer;
 //Images
 let mazeImg, snackImg;
 //Interfaces
@@ -15,13 +19,15 @@ let changes;
 
 
 
+
 function preload() {
     // mazeImg = loadImage('./assets/maze.png');
     snackImg = loadImage('./assets/minisnack.png');
-    initial = loadImage('/app/assets/Initial.png');
+    initial = loadImage('/app/assets/Initial.jpg');
     instructions = loadImage('./assets/Instructions.png')
-    game = loadImage('./assets/Game.jpg')
-    form = loadImage('./assets/Winner.png')
+    game = loadImage('./assets/Game.png')
+    form = loadImage('./assets/Winner.jpg')
+    thanks = loadImage('./assets/Gracias.jpg')
 }
 
 
@@ -33,11 +39,16 @@ function setup() {
     canvas.style('position', 'fixed');
     canvas.style('top', '0');
     canvas.style('right', '0');
-    controllerX = windowWidth / 2 - 125;
-    controllerY = 225;
+    initialX = windowWidth / 2 - 150;
+    initialY = 210;
+    controllerX = windowWidth / 2 - 150;
+    controllerY = 210;
+    finishX = windowWidth/2 + 135;
+    finishY = windowHeight/2 + 140;
     noCursor();
-    mouseX = controllerX;
-    mouseY = controllerY;
+    pmouseX = controllerX;
+    pmouseY = controllerY;
+    timer = setInterval(drainTime, 1000);
 
     imageMode(CENTER);
     rectMode(CENTER);
@@ -54,18 +65,38 @@ function draw() {
     } 
     if (changes === 'game') {
         background(255);
+        rect(finishX, finishY, 25, 25);
         image(game, windowWidth/2, windowHeight/2)
         loadPixels();
-        let pixelColor = get(pmouseX, pmouseY)
+        let pixelColor = get(controllerX, controllerY)
         newCursor(controllerX, controllerY);
-        // fill(color(pixelColor))
-        // rect(50,50,50,50)
+        textSize(40)
+        textAlign(CENTER, CENTER);
+        text(timeLeft, windowWidth/2-90, windowHeight/2-245)
+        if (pixelColor[0] == 104 && pixelColor[1] == 56 && pixelColor[2] == 23 || 
+            pixelColor[0] == 255 && pixelColor[1] == 255 && pixelColor[2] == 255
+            ) { // Si el color es negro (zona prohibida)
+            // fill(255, 0, 0); // Establece el color de relleno en rojo
+            // textSize(16);
+            // text("¡Zona prohibida!", 50, 50); // Muestra un mensaje en la posición del mouse
+            controllerX = initialX;
+            controllerY = initialY;
+          }
     }
-    if (changes === 'form') {
+    if (dist(controllerX, controllerY, finishX, finishY) < 20 || timeLeft === 0) {
         image(form, windowWidth/2, windowHeight/2)
+    }
+    if (changes === 'thanks') {
+        image(thanks, windowWidth/2, windowHeight/2)
     }
 }
 
+function drainTime() {
+    timeLeft--;
+    if (timeLeft === 0) {
+        clearInterval(timer);
+    }
+}
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);

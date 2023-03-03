@@ -25,8 +25,19 @@ const io = new Server(httpServer, { path: '/real-time' }); //WebSocket Server (i
 expressApp.post('/player/:id', (req, res)=>{
     const user = req.body;
     res.send(`
-    <link rel="stylesheet" href="./thanks.css">
-    <h2>Thanks ${user.name} for submitting your info</h2>
+    <link rel="stylesheet" href="final.css">
+    <div class="general">
+    <div class="banner">
+        <img src="./assets/logo3.png" alt="">
+    </div>
+    <div class="contenido">
+        <img class="thanks" src="./assets/THANK YOU!.png" alt="">
+        <img class="map" src="./assets/map.png" alt="">
+    </div>
+    <div class="invitation">
+        <h1>We’ll be waiting for you ${user.name}</h1>
+    </div>
+</div>
     `)
     users.push(user)
     console.log(users)
