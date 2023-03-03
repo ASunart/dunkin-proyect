@@ -78,18 +78,22 @@ function setup() {
 function draw() {
     noFill()
     noStroke()
-    rect(finishX, finishY, 25, 25)
     background(255, 5)
     fill(225, 19, 131)
-    ellipse(90, 200, 50, 50)
+    ellipse(windowWidth/2-100, 200, 50, 50)
+    fill(0, 255, 0)
+    textSize(20)
+    ellipse(finishX, finishY, 25, 25)
+    text('Finish on the green one', windowWidth/2-100, windowHeight/2 +230)
     image(gameScreen, windowWidth/2, windowHeight/2, 200, 200);
+    fill(225, 19, 131)
     textSize(24)
     text('Start from the pink dot', windowWidth/2-110, windowHeight/2 +200)
     redirect();
     }
 
     function redirect() {
-        if (dist(pmouseX, pmouseY, finishX, finishY)<15) {
+        if (dist(pmouseX, pmouseY, finishX, finishY)<18) {
             window.location.href = 'form.html';
         }
     }

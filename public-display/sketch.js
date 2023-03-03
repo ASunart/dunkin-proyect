@@ -68,11 +68,13 @@ function draw() {
     } 
     if (changes === 'game') {
         background(255);
-        rect(finishX, finishY, 25, 25);
+        rect(finishX, finishY, 50, 50);
         image(game, windowWidth/2, windowHeight/2)
         loadPixels();
         let pixelColor = get(controllerX, controllerY)
         newCursor(controllerX, controllerY);
+        noStroke();
+        fill(255);
         textSize(40)
         textAlign(CENTER, CENTER);
         text(timeLeft, windowWidth/2-90, windowHeight/2-245)
@@ -86,7 +88,7 @@ function draw() {
             controllerY = initialY;
           }
     }
-    if (dist(controllerX, controllerY, finishX, finishY) < 20 || timeLeft === 0) {
+    if (dist(controllerX, controllerY, finishX, finishY) < 25) {
         image(form, windowWidth/2, windowHeight/2)
     }
     if (changes === 'thanks') {
