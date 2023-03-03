@@ -11,7 +11,7 @@ let initialTime = 60;
 let timeLeft = initialTime;
 let timer;
 //Images
-let mazeImg, snackImg;
+let mazeImg, snackImg, qrCode;
 //Interfaces
 let initial, instructions, game, form, thanks;
 //El mensaje que recibe del servidor
@@ -28,6 +28,8 @@ function preload() {
     game = loadImage('./assets/Game.png')
     form = loadImage('./assets/Winner.jpg')
     thanks = loadImage('./assets/Gracias.jpg')
+    qrCode = loadImage('./assets/qrImage.png')
+
 }
 
 
@@ -59,6 +61,7 @@ function setup() {
 function draw() {
     if (changes === undefined) {
         image(initial, windowWidth/2, windowHeight/2)
+        image(qrCode, windowWidth/2, windowHeight/2 + 85, 100, 100);
     } 
     if (changes === 'instructions') {
         image(instructions, windowWidth/2, windowHeight/2)

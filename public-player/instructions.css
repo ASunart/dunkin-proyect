@@ -18,7 +18,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 80px;
 }
 
 .banner img{
@@ -32,11 +32,6 @@ p{
 
 .segundo-texto{
     width: 250px;
-}
-
-.primer-texto p{
-    margin: 10px;
-    font-weight: 600;
 }
 
 a{
@@ -55,5 +50,10 @@ a:hover{
 }
 
 .primer-texto img{
-    width: 270px;
+    width: 60px;
+    margin-bottom: 20px;
+}
+
+#text{
+    width: 300px;
 }
